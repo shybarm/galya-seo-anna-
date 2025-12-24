@@ -1,0 +1,148 @@
+You are a senior full-stack engineer. Build a complete, production-ready marketing website for an Allergy & Immunology specialist, using ALL of the following requirements:
+
+TECH STACK
+- Framework: Next.js 14 with App Router and TypeScript.
+- Styling: Tailwind CSS (set up and configured).
+- Icons: lucide-react.
+- Animations: framer-motion (gentle, professional).
+- Fonts: Google Fonts "Heebo" or "Assistant".
+- Direction: Entire UI in Hebrew, RTL (html dir="rtl", appropriate Tailwind/Next setup).
+
+GLOBAL DESIGN & UX
+- Aesthetic: Medical, minimalistic, trustworthy, high-end.
+- Color palette: soft teals, whites and warm sand tones.
+- Mobile-first, fully responsive layout.
+- Sticky header with navigation links (in Hebrew) that scroll or route to:
+  - אודות (About)
+  - שירותים (Services)
+  - עדכונים אחרונים (Latest Updates)
+  - שאלות ותשובות (Q&A)
+  - יצירת קשר (Contact)
+- Footer with clinic info and a short legal/medical disclaimer.
+
+SEO & SCHEMA (CRITICAL)
+- Implement proper Next.js `Metadata` for each main route with Hebrew titles and descriptions for:
+  - Home
+  - About
+  - Services / Conditions
+  - Latest Updates
+  - Q&A
+  - Contact
+- Create a reusable React component `<SchemaMarkup />` that injects JSON-LD using `<script type="application/ld+json">` for:
+  - `"@type": "Physician"`
+  - `"@type": "MedicalWebPage"`
+- Use semantic HTML (`<header>`, `<main>`, `<section>`, `<article>`, `<nav>`, `<footer>`, correct `<h1>`–`<h3>` levels).
+
+CONTENT CONTEXT (USE THIS IN STRUCTURE & COPY PLACEHOLDERS)
+- Doctor: Dr. Anna Brameli (ד"ר אנה ברמלי), Allergy and Immunology Specialist.
+- Key phrase to reflect in Hebrew copy: “מומחית לאלרגיה בילדים ובמבוגרים”.
+- Tone: Empathetic, professional, authoritative, aimed at worried parents.
+- Assume I already have full Hebrew copy for:
+  - Homepage sections (hero, why choose, services, latest updates teaser, CTA).
+  - About page (education, subspecialty in Allergy & Immunology, philosophy of care).
+  - Detailed condition pages/sections for:
+    - אלרגיה למזון
+    - אלרגיה לחלב
+    - אלרגיה לבוטנים
+    - אלרגיה לתרופות
+    - אלרגיה לדבורים ועקיצות חרקים
+    - אלרגיה לאבקנים (אלרגיות עונתיות)
+    - אורטיקריה (חרלת)
+    - אסתמה אלרגית
+    - אנפילקסיס
+    - בדיקות אלרגיה לילדים
+  - Long FAQ blocks for each of the above conditions.
+- IMPORTANT: For all text content, create clear placeholders or short sample Hebrew sentences and comments like:
+  `// TODO: insert full Hebrew FAQ for אלרגיה למזון here`.
+
+PAGE & COMPONENT STRUCTURE
+
+1) Root Layout & Global Setup
+- Configure RTL direction and Hebrew `lang` attribute.
+- Configure Tailwind and a base layout with max-width container, background colors, and typography.
+- Load Google Font (Heebo or Assistant) globally.
+
+2) Home Page (`app/page.tsx`)
+Sections (all headings and visible text in Hebrew, RTL):
+- Hero section:
+  - Placeholder doctor photo (e.g. rounded card with image).
+  - Main headline with ד"ר אנה ברמלי and mention “מומחית לאלרגיה ואימונולוגיה”.
+  - Subheadline about “מומחית לאלרגיה בילדים ובמבוגרים”.
+  - Primary CTA button: “קביעת תור”.
+  - Secondary CTA button: “שאל את העוזר הדיגיטלי”.
+  - Use framer-motion for subtle fade/slide-in.
+- Services/Conditions grid:
+  - Responsive cards (Tailwind grid) for:
+    - אלרגיה למזון
+    - אסתמה אלרגית
+    - מצבי עור ואלרגיה (e.g. אורטיקריה)
+    - אלרגיה לתרופות
+    - אלרגיה לדבורים
+    - אלרגיה לאבקנים
+  - Each card: icon from lucide-react, short Hebrew description, and link or button.
+- “Latest Updates in Allergy” section:
+  - Use a reusable `<UpdatesList />` component (see below).
+- “Why parents choose ד"ר אנה ברמלי” section:
+  - 3–4 bullet points for trust, expertise, and child-friendly approach.
+- CTA band near bottom:
+  - Calm, reassuring text in Hebrew and a “קביעת תור” button.
+
+3) Services / Conditions Page (or section)
+- Page or route showing cards or sections for each medical condition, with links to dedicated sub-sections or anchored sections.
+- Use `<article>` elements per condition with:
+  - Heading (Hebrew condition name).
+  - Short intro paragraph.
+  - Placeholder where full medical explanation will be inserted.
+  - Placeholder for FAQ list (use `<details>` / `<summary>` or a custom accordion component).
+
+4) Latest Updates (API-Ready Component)
+- Create a reusable component, e.g. `components/updates/UpdatesList.tsx`.
+- Use mock JSON array (title, date, source, short summary in Hebrew).
+- Render as cards with:
+  - Title
+  - Date
+  - Short summary
+- Add a clear `// TODO: Replace mock data with external medical API integration` comment and keep data loading isolated for easy future wiring.
+- Optionally, expose a dedicated route: `/updates`.
+
+5) Q&A / FAQ Page
+- Render grouped FAQ accordions per condition (אלרגיה למזון, אלרגיה לתרופות, אלרגיה לדבורים, וכו').
+- Use a reusable `FAQItem` or `FAQAccordion` component with:
+  - Question (Hebrew)
+  - Answer (Hebrew)
+- Use placeholders and comments where I will paste the full FAQ text later.
+
+6) Contact / Booking Page
+- Section for booking:
+  - Simple form with fields:
+    - שם מלא
+    - טלפון
+    - אימייל
+    - נושא הפנייה / תיאור קצר
+  - Basic client-side validation (required fields).
+- Clinic info section:
+  - Placeholder address, phone, WhatsApp, and opening hours in Hebrew.
+  - Simple map placeholder (div or embedded map container).
+- Use semantic `<form>` and `<label>` elements with proper `htmlFor`/`id`.
+
+7) AI Triage Bot (Frontend Only)
+- Create a floating action button (FAB) in the bottom-right using Tailwind and lucide-react icon (e.g. message-circle).
+- On click, open a chat-like panel:
+  - Panel fixed at bottom-right, with card-style UI.
+  - Chat bubbles (user vs. bot) in Hebrew (dummy flow).
+  - Input field with send button; local state holds the conversation.
+  - Do not implement real AI calls; just simulate a few bot responses.
+  - Add a visible note at the top: “העוזר הדיגיטלי אינו תחליף לייעוץ רפואי”.
+- Structure this as a reusable component, e.g. `<AllergyAssistantWidget />`, and include it in the root layout so it appears on all pages.
+
+IMPLEMENTATION DETAILS
+- Use proper TypeScript types for props and data objects (articles, FAQ, services).
+- Use `app` directory routing (Next.js App Router).
+- Keep components organized under `components/` (e.g. `components/layout`, `components/hero`, `components/services`, `components/faq`, `components/assistant`, `components/schema`).
+- Ensure all visible strings are in Hebrew and RTL friendly.
+- Include clear comments where I should paste the long Hebrew copy and FAQs generated previously.
+
+Finally:
+- Scaffold the entire project (package.json, next.config, tailwind.config, tsconfig, app structure).
+- Install all required dependencies (next, react, react-dom, typescript, tailwindcss, postcss, autoprefixer, lucide-react, framer-motion).
+- Output all key files (layout, page components, main components) with complete, working code.
